@@ -102,3 +102,24 @@ plot(data[c==1,3],data[c==1,2],'bo',alpha=.7)
 plot(data[c==2,3],data[c==2,2],'go',alpha=.7)
 plot(data[c==0,3],data[c==0,2],'mo',alpha=.7)
 show()
+
+# 为了应用线性回归，我们需要建立一个由上所述的综合数据集
+from numpy.random import rand
+
+x = rand ( 40, 1 )
+y = x * x * x + rand ( 40, 1 ) / 5
+
+from sklearn.linear_model import LinearRegression
+
+linreg = LinearRegression ()
+linreg.fit ( x, y )
+
+# 我们可以通过把拟合线和实际数据点画在同一幅图上来评估结果
+from numpy import linspace, matrix
+
+xx = linspace ( 0, 1, 40 )
+plot ( x, y, "o", xx, linreg.predict ( matrix ( xx ).T ), "--r" )
+# show()
+#close()
+from sklearn.metrics import mean_squared_error
+print mean_squared_error(linreg.predict(x), y)
